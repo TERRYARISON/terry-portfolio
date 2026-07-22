@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cyan-glow: #7ef0ff;
+  --pink-glow: #ff7ec7;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-ink text-white font-body antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(126, 240, 255, 0.25);
+  color: #fff;
+}
+
+/* ---------- glass ---------- */
+.glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 24px 60px -32px rgba(0, 0, 0, 0.85);
+}
+
+.glass-hover {
+  transition: border-color 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glass-hover:hover {
+  border-color: rgba(126, 240, 255, 0.28);
+  transform: translateY(-4px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 32px 80px -32px rgba(0, 0, 0, 0.9),
+    0 0 48px -18px rgba(126, 240, 255, 0.22);
+}
+
+/* ---------- typography helpers ---------- */
+.display-italic {
+  font-style: italic;
+  background: linear-gradient(100deg, var(--cyan-glow), var(--pink-glow));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  @apply font-body uppercase text-mist-dim;
+  letter-spacing: 0.32em;
+  font-size: 0.6875rem;
+}
+
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0));
+}
+
+/* ---------- glow dots / ambience ---------- */
+.glow-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
+
+/* ---------- ken burns ---------- */
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.08) translate(-1.2%, -1.6%); }
+}
+
+.kenburns {
+  animation: kenburns 28s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(2%, -3%, 0); }
+}
+
+.drift {
+  animation: drift 18s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.pulse-soft {
+  animation: pulse-soft 5s ease-in-out infinite;
+}
+
+/* ---------- prose-ish editorial blocks ---------- */
+.prose-terry p {
+  @apply text-mist leading-relaxed;
+}
+
+.prose-terry p + p {
+  margin-top: 1rem;
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .kenburns,
+  .drift,
+  .pulse-soft {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- print (resume) ---------- */
+@media print {
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-page {
+    background: #fff !important;
+    color: #111 !important;
+    box-shadow: none !important;
+  }
+  .print-page * {
+    color: #111 !important;
+    border-color: #ddd !important;
+    text-shadow: none !important;
+    background-image: none !important;
+  }
+}
