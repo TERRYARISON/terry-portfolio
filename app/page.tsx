@@ -7,6 +7,7 @@ import Perspective from "@/components/home/Perspective";
 import AboutPreview from "@/components/home/AboutPreview";
 import ResumeContactStrip from "@/components/home/ResumeContactStrip";
 
+// Manual Chat edit test: verified direct write access without changing rendered output.
 export default function Home() {
   return (
     <>
